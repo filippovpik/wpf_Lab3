@@ -18,7 +18,44 @@ namespace Task3_1
     {
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent();            
+        }
+
+
+
+        private void myButton_Click(object sender, RoutedEventArgs e)
+        {
+            string eduForm = "Заочно";
+
+            if (checkBox.IsChecked == true)
+            {
+                if (Fulltime.IsChecked == true) 
+                    eduForm = "Очно";
+
+                var selectedCourses = Courses.SelectedItems
+                    .Cast<ListBoxItem>()
+                    .Select(item => item.Content.ToString())
+                    .ToList();
+                string message = $"Студент: {myTextBox.Text}\n" +
+                                 $"Факультет: {Departments.Text}\n" +                                 
+                                 $"Форма обучения: {eduForm}\n" +
+                                 $"Количество часов: {MySlider.Value}\n" +
+                                 $"Курсы: {string.Join(",", selectedCourses)}";
+                MessageBox.Show(message, "Данные отправлены");
+            }
+            else
+            {
+                MessageBox.Show("Необходимо согласие на обработку данных!");
+            }
+
+
+        }
+
+        private void MySlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            int hours=(int)(MySlider?.Value ?? 8);
+            if (Hours!=null)
+                Hours.Text=hours.ToString();
         }
     }
 }
